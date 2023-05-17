@@ -82,7 +82,7 @@ export const NavBar = props => {
 							Claims
 						</Button>
 					)}
-					<Button component={Link} to='/register-eInvoice' color='primary' style={{ border: '0.5px solid blue' }}>
+					<Button component={Link} to='/register-eInvoice' color='primary'>
 						Registering for e-invoice
 					</Button>
 					<Button component={Link} to='/myinvoices' color='primary'>

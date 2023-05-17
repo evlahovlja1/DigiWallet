@@ -6,6 +6,9 @@ RUN npm install --legacy-peer-deps
 
 COPY ./administration-app/ .
 
+
+RUN npm i webpack@5.82.0
+
 RUN npm run build --production
 RUN npm install -g serve
 

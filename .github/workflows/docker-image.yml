@@ -27,7 +27,7 @@ jobs:
       run: docker build . --file ./administration-app/Dockerfile.prod --tag evlahovlja1/siprojekat:$(date +%s)
       
     - name: Docker Push backend
-      run: docker push chamodshehanka/node-test
+      run: docker push evlahovlja1/siprojekat-backend
       
     - name: Docker Push frontend
-      run: docker push chamodshehanka/node-test
+      run: docker push evlahovlja1/siprojekat

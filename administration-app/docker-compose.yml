@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  si:
+    image: evlahovlja1/siprojekat:latest
+    container_name: siprojekat
+    ports:
+      - "80:80"
+    restart: on-failure:10

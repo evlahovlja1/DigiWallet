@@ -4,7 +4,10 @@ WORKDIR /app
 COPY ./administration-app/package.json ./
 RUN npm install --legacy-peer-deps
 
-COPY ./administration-app ./
+COPY ./administration-app/ .
+
+
+RUN npm i webpack@5.82.0 --legacy-peer-deps
 
 RUN npm run build --production
 RUN npm install -g serve

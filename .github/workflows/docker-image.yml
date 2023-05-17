@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+    - name: Build the backend image
+      run: docker build . --file ./AdministrationAPI/Dockerfile.prod --tag evlahovlja1/siprojekat-backend:$(date +%s)
+      
+    - name: Build the frontend image
+      run: docker build . --file ./administration-app/Dockerfile.prod --tag evlahovlja1/siprojekat:$(date +%s)
+      
+    - name: Docker Push backend
+      run: docker push evlahovlja1/siprojekat-backend
+      
+    - name: Docker Push frontend
+      run: docker push evlahovlja1/siprojekat

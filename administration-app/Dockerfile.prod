@@ -1,10 +1,10 @@
 FROM node:latest
 
 WORKDIR /app
-COPY ./administration-app/package.json ./
+COPY ./package.json ./
 RUN npm install --legacy-peer-deps
 
-COPY ./administration-app ./
+COPY . .
 
 RUN npm run build --production
 RUN npm install -g serve

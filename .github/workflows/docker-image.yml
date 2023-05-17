@@ -21,13 +21,13 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     - name: Build the backend image
-      run: docker build . --file ./AdministrationAPI/Dockerfile.prod --tag evlahovlja1/siprojekat-backend:$(date +%s)
+      run: docker build . --file ./AdministrationAPI/Dockerfile.prod --tag $DOCKER_USER/siprojekat-backend:$(date +%s)
       
     - name: Build the frontend image
-      run: docker build . --file ./administration-app/Dockerfile.prod --tag evlahovlja1/siprojekat:$(date +%s)
+      run: docker build . --file ./administration-app/Dockerfile.prod --tag $DOCKER_USER/siprojekat:$(date +%s)
       
     - name: Docker Push backend
-      run: docker push evlahovlja1/siprojekat-backend
+      run: docker push $DOCKER_USER/siprojekat-backend --all-tags
       
     - name: Docker Push frontend
-      run: docker push evlahovlja1/siprojekat
+      run: docker push $DOCKER_USER/siprojekat --all-tags

@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image Build
 
 on:
   pull_request:
@@ -12,12 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: docker login
-      env:
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
     - name: Setup .env.prod file
       run: |
@@ -28,9 +22,3 @@ jobs:
       
     - name: Build the frontend image
       run: docker build . --file ./administration-app/Dockerfile.prod --tag evlahovlja1/siprojekat:$(date +%s)
-      
-    - name: Docker Push backend
-      run: docker push evlahovlja1/siprojekat-backend --all-tags
-      
-    - name: Docker Push frontend
-      run: docker push evlahovlja1/siprojekat --all-tags

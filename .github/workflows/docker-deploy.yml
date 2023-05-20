@@ -3,7 +3,6 @@ name: Docker Image Deploy
 on:
   release:
     types: [ published ]
-	
 
 jobs:
 

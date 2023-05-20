@@ -1,8 +1,9 @@
 name: Docker Image Deploy
 
 on:
-  push:
-    branches: [ main ]
+  release:
+    types: [ published ]
+	
 
 jobs:
 

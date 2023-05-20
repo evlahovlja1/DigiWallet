@@ -28,7 +28,7 @@ namespace AdministrationAPI.Services
                 if (token.Length < 8)
                     return ("Invalid token!", null);
                 var content1 = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("https://processingserver.herokuapp.com/api/Account/CreateAccount?token=" + token.Substring(7),
+                var response = await client.PostAsync("https://processingserver.herokuapp.com/api/UserBankAccount/CreateAccount?token=" + token.Substring(7),
                     content1);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -56,7 +56,7 @@ namespace AdministrationAPI.Services
 
                 if (token.Length < 8)
                     return ("Invalid token!", null);
-                var response = await client.GetAsync("https://processingserver.herokuapp.com/api/Account/GetAllAccountsForUser?token=" + token.Substring(7));
+                var response = await client.GetAsync("https://processingserver.herokuapp.com/api/UserBankAccount/GetAllAccountsForUser?token=" + token.Substring(7));
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var userTransfer = await response.Content.ReadFromJsonAsync<List<CurrencyAccount>>();
@@ -83,7 +83,7 @@ namespace AdministrationAPI.Services
 
                 if (token.Length < 8)
                     return ("Invalid token!", null);
-                var response = await client.GetAsync("https://processingserver.herokuapp.com/api/Account/GetAllAccounts?token=" + token.Substring(7));
+                var response = await client.GetAsync("https://processingserver.herokuapp.com/api/UserBankAccount/GetAllAccounts?token=" + token.Substring(7));
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var userTransfer = await response.Content.ReadFromJsonAsync<List<CurrencyAccount>>();

@@ -1,12 +1,12 @@
-name: Docker Image CI
+name: Docker Image Deploy
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
 jobs:
 
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 

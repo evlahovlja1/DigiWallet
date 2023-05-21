@@ -25,9 +25,13 @@ const LoginForm = props => {
 
 	useEffect(() => {
 		props.setToken(localStorage.getItem('token'));
-		getValidateToken(localStorage.getItem('token')).then(response => {
-			props.setIsAdmin(userAdmin(response.data));
-		});
+		getValidateToken(localStorage.getItem('token'))
+			.then(response => {
+				props.setIsAdmin(userAdmin(response.data));
+			})
+			.catch(() => {
+				props.setIsAdmin(false);
+			});
 	}, []);
 
 	const userAdmin = user => {
@@ -98,9 +102,13 @@ const LoginForm = props => {
 
 				localStorage.setItem('token', token);
 				localStorage.setItem('userId', userId);
-				getValidateToken(localStorage.getItem('token')).then(response => {
-					props.setIsAdmin(userAdmin(response.data));
-				});
+				getValidateToken(localStorage.getItem('token'))
+					.then(response => {
+						props.setIsAdmin(userAdmin(response.data));
+					})
+					.catch(() => {
+						props.setIsAdmin(false);
+					});
 
 				navigate('/user');
 			})

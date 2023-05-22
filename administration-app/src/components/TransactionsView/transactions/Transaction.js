@@ -18,21 +18,21 @@ export default function Transaction(arg) {
 	>
 <ClaimForm id={arg.prop.transactionId} onClose={handleCloseForm}></ClaimForm>
 	</Modal>
-			<TableRow sx={{ bgcolor: '#fff' }}>
+			<TableRow sx={{ bgcolor: '#fff' }} data-testid="transaction-list-row">
 				<TableCell sx={{ width: '11%' }}></TableCell>
 				<TableCell sx={{ width: '20%' }} align='center'>
 					{parseDate(arg.prop.createdAt)}
 				</TableCell>
-				<TableCell sx={{ width: '20%' }} align='center'>
-					{arg.prop.recipient.name ? arg.prop.recipient.name : arg.prop.recipient.phoneNumber}
+				<TableCell sx={{ width: '20%' }} align='center' data-testid="recipient-value-test">
+		 			{arg.prop.recipient.name ? arg.prop.recipient.name : arg.prop.recipient.phoneNumber}
 				</TableCell>
-				<TableCell sx={{ width: '20%' }} align='center'>
+				<TableCell sx={{ width: '20%' }} align='center' data-testid="amount-value-test">
 					{arg.prop.amount}
 				</TableCell>
-				<TableCell sx={{ width: '10%' }} align='center'>
+				<TableCell sx={{ width: '10%' }} align='center' data-testid="currency-value-test">
 					{arg.prop.currency}
 				</TableCell>
-				<TableCell sx={{ width: '13%' }} align='center'>
+				<TableCell sx={{ width: '13%' }} align='center' data-testid="type-value-test">
 					{arg.prop.transactionType}
 				</TableCell>
 				<TableCell sx={{ width: '7%' }} align='center'>
@@ -63,15 +63,15 @@ export default function Transaction(arg) {
             >
 				<ClaimForm id={arg.prop.transactionId} onClose={handleCloseForm}></ClaimForm>
             </Modal>
-			<TableRow sx={{ bgcolor: '#fff' }}>
+			<TableRow sx={{ bgcolor: '#fff' }} data-testid="transaction-list-row">
 				<TableCell></TableCell>
 				<TableCell align='center'>{parseDate(arg.prop.createdAt)}</TableCell>
-				<TableCell align='center'>
+				<TableCell align='center' data-testid="recipient-value-test">
 					{arg.prop.recipient.name ? arg.prop.recipient.name : arg.prop.recipient.phoneNumber}
 				</TableCell>
-				<TableCell align='center'>{arg.prop.amount}</TableCell>
-				<TableCell align='center'>{arg.prop.currency}</TableCell>
-				<TableCell align='center'>{arg.prop.transactionType}</TableCell>
+				<TableCell align='center' data-testid="amount-value-test">{arg.prop.amount}</TableCell>
+				<TableCell align='center' data-testid="currency-value-test">{arg.prop.currency}</TableCell>
+				<TableCell align='center' data-testid="type-value-test">{arg.prop.transactionType}</TableCell>
 				<TableCell align='center'>
 					<Button
 						onClick={() => {

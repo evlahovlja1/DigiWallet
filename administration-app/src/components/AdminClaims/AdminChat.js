@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Input, TextField, Typography } from '@mui/material';
 import { getMessages, sendMessage } from '../../services/adminClaimService';
 import { getUserId } from '../../services/userService';
@@ -34,16 +34,22 @@ const MessagingDialog = ({ open, onClose, claimId }) => {
 	const [messages, setMessages] = useState([]);
 	const [newMessage, setNewMessage] = useState('');
 	const [file, setFile] = useState(null);
-	const [change, setChange] = useState(false);
 	let userId = getUserId();
 
-	useEffect(() => {
-		if (claimId != -1) {
-			getMessages(claimId).then(response => {
-				setMessages(response.data.messages);
-			});
+	const fetchMessages = useCallback(() => {
+		if (claimId !== -1) {
+			getMessages(claimId)
+				.then(response => {
+					setMessages(response.data.messages);
+				})
+				.catch(error => console.error('Error while fetching messages:', error));
 		}
-	}, [change]);
+	}, [claimId]);
+
+	useEffect(() => {
+		fetchMessages();
+	}, [fetchMessages]);
+
 	const handleNewMessageChange = event => {
 		setNewMessage(event.target.value);
 	};
@@ -53,7 +59,7 @@ const MessagingDialog = ({ open, onClose, claimId }) => {
 			let message = { transactionClaimId: claimId, message: newMessage, documentIds: [] };
 			sendMessage(message)
 				.then(response => {
-					setChange(!change);
+					fetchMessages();
 					setNewMessage('');
 				})
 				.catch(error => console.error('Error sending message', error));

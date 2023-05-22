@@ -22,15 +22,16 @@ export default function Group(arg) {
 					<Typography variant='subtitle2'> Count: {arg.data.numberOfTransactions}</Typography>
 				</TableCell>
 				<TableCell align='center'>
-					<IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
+					<IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}
+					data-testid="ikona-za-prikaz">
 						{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 					</IconButton>
 				</TableCell>
 			</TableRow>
 			<TableRow>
-				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7} data-testid="red-za-grupisanje">
 					<Collapse in={open} timeout='auto' unmountOnExit>
-						<Table size='small' aria-label='purchases'>
+						<Table size='small' aria-label='purchases' data-testid="tabela-za-grupisanje-t">
 							<TableBody>
 								{arg.data.transactions.map((item, index) => (
 									<Transaction
@@ -43,7 +44,7 @@ export default function Group(arg) {
 								))}
 							</TableBody>
 						</Table>
-					</Collapse>
+					</Collapse>					
 				</TableCell>
 			</TableRow>
 		</React.Fragment>

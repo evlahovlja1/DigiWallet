@@ -28,7 +28,10 @@ const AdminClaims = () => {
 
 	const assignClaimToAdmin = id => {
 		assignClaim({ transactionClaimId: id })
-			.then(response => console.log('Assigned'))
+			.then(response => {
+				fetchOpenClaims();
+				fetchAssignedClaims();
+			})
 			.catch(error => console.error('Not assigned', error));
 	};
 
@@ -36,41 +39,48 @@ const AdminClaims = () => {
 		if (claim.status !== 'Solved_Confirmed') {
 			let newStatus = claim.status === 'Solved' ? 'Solved_Confirmed' : 'Solved';
 			updateClaim({ transactionClaimId: claim.id, claimStatus: newStatus })
-				.then(response => setChange(!change))
+				.then(response => fetchAssignedClaims())
 				.catch(error => console.error('Error while changing claim status', error));
 		}
 	};
-	useEffect(() => {
-		getAllOpenClaims().then(response =>
-			setUnassignedClaims(
-				response.data.map(c => {
-					return {
-						id: c.id,
-						transactionId: c.transactionId,
-						subject: c.subject,
-						description: c.description,
-						status: c.status,
-					};
-				})
-			)
-		);
-	}, []);
+
+	const fetchOpenClaims = () => {
+		getAllOpenClaims()
+			.then(response => {
+				const openClaims = response.data.map(c => ({
+					id: c.id,
+					transactionId: c.transactionId,
+					subject: c.subject,
+					description: c.description,
+					status: c.status,
+				}));
+				setUnassignedClaims(openClaims);
+			})
+			.catch(error => console.error('Error while fetching open claims:', error));
+	};
+
+	const fetchAssignedClaims = () => {
+		getAssignedClaims()
+			.then(response => {
+				const assignedClaims = response.data.map(c => ({
+					id: c.id,
+					transactionId: c.transactionId,
+					subject: c.subject,
+					description: c.description,
+					status: c.status,
+				}));
+				setAssignedClaims(assignedClaims);
+			})
+			.catch(error => console.error('Error while fetching assigned claims:', error));
+	};
 
 	useEffect(() => {
-		getAssignedClaims().then(response =>
-			setAssignedClaims(
-				response.data.map(c => {
-					return {
-						id: c.id,
-						transactionId: c.transactionId,
-						subject: c.subject,
-						description: c.description,
-						status: c.status,
-					};
-				})
-			)
-		);
-	}, []);
+		fetchOpenClaims();
+	}, [value]);
+
+	useEffect(() => {
+		fetchAssignedClaims();
+	}, [value]);
 
 	return (
 		<Box sx={{ width: '100%', typography: 'body1' }}>

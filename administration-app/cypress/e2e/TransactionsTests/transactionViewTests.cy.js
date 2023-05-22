@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Testing login form', () => {
+describe('Testing Transaction and view functionality', () => {
     beforeEach(() => {
       // Cypress starts out with a blank slate for each test
       // so we must tell it to visit our website with the `cy.visit()` command.
@@ -107,7 +107,6 @@ describe('Testing login form', () => {
         cy.wait(3000);
     });
 
-
     it('Test: App renders transactions which are sorted by some criteria', () => {
         cy.visit('localhost:3000/login');
         cy.get('[type="text"]').type('fejza2806@gmail.com');
@@ -138,8 +137,6 @@ describe('Testing login form', () => {
         cy.wait(3000)
     });
 
-
-
     it('Test: App renders transactions which are group by some criteria', () => {
         cy.visit('localhost:3000/login');
         cy.get('[type="text"]').type('fejza2806@gmail.com');
@@ -154,17 +151,23 @@ describe('Testing login form', () => {
         cy.wait(1000);
         cy.get('[data-testid="group-by-test"]').click();
         cy.get('[data-testid="group-by-c"]').click();
-        cy.get('[data-testid="transaction-list-table"]').find('.css-2blr9s-MuiTableRow-root').should('have.length', 8); // provjeriti jer je hc
+        //cy.get('[data-testid="transaction-list-table"]').find('.css-2blr9s-MuiTableRow-root').should('have.length', 8); // provjeriti jer je hc
+        cy.get('[data-testid="transaction-list-table"]').find('[data-testid="red-za-grupisanje"]').should('have.length', 8); // provjeriti jer je hc
         cy.wait(3000);
-        cy.get('.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root').first().click();
-        cy.get('.css-rqglhn-MuiTable-root').find('.css-1p72hwd-MuiTableRow-root').should('have.length', 16)
+        //cy.get('.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root').first().click();
+        cy.get('[data-testid="ikona-za-prikaz"]').first().click();
+        cy.get('[data-testid="tabela-za-grupisanje-t"]').find('[data-testid="transaction-list-row"]').should('have.length', 16)
+        //cy.get('.css-rqglhn-MuiTable-root').find('.css-1p72hwd-MuiTableRow-root').should('have.length', 16)
+        // data-testid="transaction-list-row" za one liste transackija kad se klikne na ^
         cy.wait(3000);
         cy.get('[data-testid="group-by-test"]').click();
         cy.get('[data-testid="group-by-t"]').click();
-        cy.get('[data-testid="transaction-list-table"]').find('.css-2blr9s-MuiTableRow-root').should('have.length', 3);
+        cy.get('[data-testid="transaction-list-table"]').find('[data-testid="red-za-grupisanje"]').should('have.length', 3);
         cy.wait(3000);
-        cy.get('.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root').first().click();
-        cy.get('.css-rqglhn-MuiTable-root').find('.css-1p72hwd-MuiTableRow-root').should('have.length', 6)
+        //cy.get('.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root').first().click();
+        cy.get('[data-testid="ikona-za-prikaz"]').first().click();
+        //cy.get('.css-rqglhn-MuiTable-root').find('.css-1p72hwd-MuiTableRow-root').should('have.length', 6)
+        cy.get('[data-testid="tabela-za-grupisanje-t"]').find('[data-testid="transaction-list-row"]').should('have.length', 6)
         cy.wait(3000)
     });
 

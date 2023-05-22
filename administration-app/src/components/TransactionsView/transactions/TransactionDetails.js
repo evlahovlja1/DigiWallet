@@ -30,8 +30,8 @@ export default function TransactionDetails(arg) {
 			<Typography variant='h2' sx={{ bgcolor: '#fff', width: '100%', pb: 3, mb: 3 }} align='center'>
 				Transaction details
 			</Typography>
-			<Table sx={{ width: '95%', m: 'auto', bgcolor: '#fff' }}>
-				<TableHead>
+			<Table sx={{ width: '95%', m: 'auto', bgcolor: '#fff' }} data-testid="transaction-details-table">
+				<TableHead data-testid="transaction-details-table-head">
 					<TableRow>
 						<TableCell align='center'>ID</TableCell>
 						<TableCell align='center'>Date</TableCell>
@@ -44,7 +44,7 @@ export default function TransactionDetails(arg) {
 						<TableCell align='center'></TableCell>
 					</TableRow>
 				</TableHead>
-				<TableRow>
+				<TableRow data-testid="transaction-details-table-row">
 					<TableCell align='center'>{arg.props.transactionId}</TableCell>
 					<TableCell align='center'>{parseDate(arg.props.createdAt)}</TableCell>
 					<TableCell align='center'>

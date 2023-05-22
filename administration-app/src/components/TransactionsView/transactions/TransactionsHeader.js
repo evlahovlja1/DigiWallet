@@ -100,7 +100,7 @@ export default function TransactionsListHeader(arg) {
 
 	//end of min max slider
 	return (
-		<TableHead>
+		<TableHead data-id="tabela-head">
 			<TableRow>
 				<TableCell align='center' sx={{ width: '11%' }}>
 					<Typography variant='h6'>Group by</Typography>
@@ -116,6 +116,7 @@ export default function TransactionsListHeader(arg) {
 									setSortingColumn('createdat');
 									setSortingDirection('asc');
 								}}
+								data-id="sort-date"
 							/>
 						</Box>
 					) : (
@@ -134,7 +135,7 @@ export default function TransactionsListHeader(arg) {
 						</TableSortLabel>
 					)}
 				</TableCell>
-				<TableCell align='center' sx={{ width: '20%' }}>
+				<TableCell align='center' sx={{ width: '20%' }} data-id="recipient-column">
 					{sortingColumn != 'Recipient' ? (
 						<Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, justifyContent: 'center' }}>
 							<Typography variant='h6'>Recipient</Typography>
@@ -145,6 +146,7 @@ export default function TransactionsListHeader(arg) {
 									setSortingDirection('asc');
 									setSortDirectionAmount('asc');
 								}}
+								data-id="sort-recipient"
 							/>
 						</Box>
 					) : (
@@ -174,6 +176,7 @@ export default function TransactionsListHeader(arg) {
 									setSortDirectionAmount('asc');
 									setSortingColumn('Amount');
 								}}
+								data-id="sort-amount"
 							/>
 						</Box>
 					) : (
@@ -202,6 +205,7 @@ export default function TransactionsListHeader(arg) {
 									setSortingColumn('Currency');
 									setSortingDirection('asc');
 								}}
+								data-id="sort-currency"
 							/>
 						</Box>
 					) : (
@@ -230,6 +234,7 @@ export default function TransactionsListHeader(arg) {
 									setSortingColumn('Type');
 									setSortingDirection('asc');
 								}}
+								data-id="sort-type"
 							/>
 						</Box>
 					) : (
@@ -283,12 +288,13 @@ export default function TransactionsListHeader(arg) {
 									sortingOrder: 'createdatdesc',
 								});
 							}}
+							data-testid="group-by-test"
 						>
 							<MenuItem value=''>
 								<em>None</em>
 							</MenuItem>
-							<MenuItem value='Currency'>Currency</MenuItem>
-							<MenuItem value='Type'>Type</MenuItem>
+							<MenuItem value='Currency' data-testid="group-by-c">Currency</MenuItem>
+							<MenuItem value='Type' data-testid="group-by-t">Type</MenuItem>
 						</Select>
 					</FormControl>
 				</TableCell>
@@ -302,7 +308,7 @@ export default function TransactionsListHeader(arg) {
 								justifyContent: 'center',
 							}}
 						>
-							<DesktopDatePicker
+							<DesktopDatePicker data-testid="date-start-input"
 								label='Start'
 								sx={{ width: 'auto' }}
 								maxDate={dateEndFilter}
@@ -311,7 +317,7 @@ export default function TransactionsListHeader(arg) {
 									setDateStartFilter(a);
 								}}
 							></DesktopDatePicker>
-							<DesktopDatePicker
+							<DesktopDatePicker data-testid="date-end-input"
 								minDate={dateStartFilter}
 								value={dateEndFilter}
 								onChange={a => {
@@ -324,7 +330,7 @@ export default function TransactionsListHeader(arg) {
 				</TableCell>
 
 				<TableCell align='center'>
-					<TextField
+					<TextField data-testid="recipient-input"
 						value={recipientFilter}
 						fullWidth={true}
 						onChange={e => {
@@ -335,7 +341,7 @@ export default function TransactionsListHeader(arg) {
 				<TableCell>
 					<Box>
 						<Box sx={{ flexDirection: 'row', display: 'flex', gap: 2, justifyContent: 'space-between' }}>
-							<TextField
+							<TextField data-testid="amount-min-input"
 								type='number'
 								value={amountMin}
 								onChange={e => {
@@ -343,7 +349,7 @@ export default function TransactionsListHeader(arg) {
 								}}
 								placeholder='Min'
 							></TextField>
-							<TextField
+							<TextField data-testid="amount-max-input"
 								type='number'
 								value={amountMax}
 								onChange={e => {
@@ -406,7 +412,7 @@ export default function TransactionsListHeader(arg) {
 
 				<TableCell>
 					<Box display={'flex'} gap={1} flexDirection={'column'} justifyContent={'center'}>
-						<Button
+						<Button className='filterTransaction' data-testid="filter-test"
 							onClick={() => {
 								if (
 									amountMax.includes('e') ||

@@ -41,7 +41,6 @@ import SellIcon from '@mui/icons-material/Sell';
 import { TablePagination } from '@mui/material';
 import { getValidateToken } from '../../services/userService';
 
-
 const theme = createTheme({
 	components: {
 		MuiSwitch: {
@@ -70,7 +69,6 @@ const theme = createTheme({
 		},
 	},
 });
-
 
 const tableTheme = createTheme({
 	palette: {
@@ -162,30 +160,28 @@ const Voucher = () => {
 	const [change, setChange] = useState(false);
 	const [dense, setDense] = useState(false);
 	const [page, setPage] = useState(0);
-	const [user, setUser] = useState("");
+	const [user, setUser] = useState('');
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
 	useEffect(() => {
-		getValidateToken(localStorage.getItem('token')).then(response => {
-			setUser(
-				response.data
-			);
-		});
-	},[]);
-
+		getValidateToken(localStorage.getItem('token'))
+			.then(response => {
+				setUser(response.data);
+			})
+			.catch(() => {});
+	}, []);
 
 	const userAdmin = () => {
-		if(user.roles){
-			var b = user.roles.filter(v => v==='Admin')[0];
-			if(b=== "Admin"){
-				console.log("Uslo u ovu funkciju");
+		if (user.roles) {
+			var b = user.roles.filter(v => v === 'Admin')[0];
+			if (b === 'Admin') {
+				console.log('Uslo u ovu funkciju');
 				return true;
 			}
 			return false;
 		}
 		return false;
-	}
-
+	};
 
 	useEffect(() => {
 		getAllVouchers().then(response => {
@@ -206,7 +202,7 @@ const Voucher = () => {
 	useEffect(() => {
 		getAllCurrencies().then(response => {
 			setCurrecys(response.data);
-		})
+		});
 	}, []);
 
 	const handleCreateDialogOpen = () => {
@@ -223,20 +219,19 @@ const Voucher = () => {
 		var noVoucher1 = form.NumberOfVouchers.value;
 		var noVoucherNumber = noVoucher1 * 1;
 		var amou = form.amount.value;
-		var amountNumber = amou* 1;
+		var amountNumber = amou * 1;
 		var string1 = form.currency.value;
 
 		var b = currencys.filter(v => v.name == string1)[0];
-		console.log("bbb ", b.id);
-		createVoucher(noVoucherNumber,amountNumber,b.id).then(response => {
-			setOpenCreateDialog(false);
-			setOpenSnackbar(true);
-			setChange(!change);
-		})
-		.catch(error => console.error(error));
+		console.log('bbb ', b.id);
+		createVoucher(noVoucherNumber, amountNumber, b.id)
+			.then(response => {
+				setOpenCreateDialog(false);
+				setOpenSnackbar(true);
+				setChange(!change);
+			})
+			.catch(error => console.error(error));
 	};
-
-
 
 	const handleUpdateDialogOpen = voucher => {
 		setSelectedVoucher(voucher);
@@ -257,23 +252,24 @@ const Voucher = () => {
 	};
 
 	const handleVoidVoucher = voucher => {
-		var b = "4";
-		changeVoucherStatus({ code: voucher.code , statusId: b}).then(response => {
-			setOpenSnackbarVoucherVoid(true);
-			setChange(!change);
-		})
-		.catch(error => console.error(error));
-	}
-
+		var b = '4';
+		changeVoucherStatus({ code: voucher.code, statusId: b })
+			.then(response => {
+				setOpenSnackbarVoucherVoid(true);
+				setChange(!change);
+			})
+			.catch(error => console.error(error));
+	};
 
 	const handleRedeemVoucher = voucher => {
-		console.log("Voucher ovdje kad se pozve je " + JSON.stringify(voucher));
-		var b = returnStatus(voucher.voucherStatusId);	
-		changeVoucherStatus({ code: voucher.code , statusId: b}).then(response => {
-			setOpenSnackbarVoucher(true);
-			setChange(!change);
-		})
-		.catch(error => console.error(error));
+		console.log('Voucher ovdje kad se pozve je ' + JSON.stringify(voucher));
+		var b = returnStatus(voucher.voucherStatusId);
+		changeVoucherStatus({ code: voucher.code, statusId: b })
+			.then(response => {
+				setOpenSnackbarVoucher(true);
+				setChange(!change);
+			})
+			.catch(error => console.error(error));
 	};
 
 	const handleSnackbarClose = () => {
@@ -284,57 +280,52 @@ const Voucher = () => {
 		setDense(event.target.checked);
 	};
 
-	const returnStatus = (a) => {
-		if (a === "1")
-		 	return "2";
-		else if (a === "2")
-		 	return "3";
-		else if (a === "3")
-			return "4";
-		return "1";
-	}
+	const returnStatus = a => {
+		if (a === '1') return '2';
+		else if (a === '2') return '3';
+		else if (a === '3') return '4';
+		return '1';
+	};
 
-	const statusV = (a) => {
+	const statusV = a => {
 		//this functions returs witch status is a voucher
 		/*new VoucherStatus { Id = "1", Status = "ISSUED" },
                    new VoucherStatus { Id = "2", Status = "ACTIVE" },
                    new VoucherStatus { Id = "3", Status = "REDEEMED" },
                    new VoucherStatus { Id = "4", Status = "VOID" }*/
-		if(a === '1') return "ISSUED";
-		else if(a === '2') return "ACTIVE";
-		else if(a === '3') return "REDEEMED";
-		else if( a === '4') return "VOID";
-		return "INVALID STATUS";
-	} 
-	const currencyV = (a) => {
+		if (a === '1') return 'ISSUED';
+		else if (a === '2') return 'ACTIVE';
+		else if (a === '3') return 'REDEEMED';
+		else if (a === '4') return 'VOID';
+		return 'INVALID STATUS';
+	};
+	const currencyV = a => {
 		//return what currency is in databse saved
-		var b=currencys.filter(v => v.id===a)[0]
-		if(b)
-		return b.name;
-		else return "NOT DEFINED";	
-	}
+		var b = currencys.filter(v => v.id === a)[0];
+		if (b) return b.name;
+		else return 'NOT DEFINED';
+	};
 
-	const isTrueSt = (a) => {
-		if(a === "REDEEMED" || a ==="VOID" || a === "ACTIVE") return true;
-		else return false
-	} 
-	const is1or2 = (a) => {
-		//it return if a status is redeemed active or issued on a nubmer that returns get and it 
+	const isTrueSt = a => {
+		if (a === 'REDEEMED' || a === 'VOID' || a === 'ACTIVE') return true;
+		else return false;
+	};
+	const is1or2 = a => {
+		//it return if a status is redeemed active or issued on a nubmer that returns get and it
 		//
-		if( a === "1" || a === "2") return true;
+		if (a === '1' || a === '2') return true;
 		return false;
-	}
+	};
 
-	  
-		const handleChangePage = (event, newPage) => {
-		  setPage(newPage);
-		};
-	  
-		const handleChangeRowsPerPage = (event) => {
-		  setRowsPerPage(+event.target.value);
-		  setPage(0);
-		};
-	
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
+
+	const handleChangeRowsPerPage = event => {
+		setRowsPerPage(+event.target.value);
+		setPage(0);
+	};
+
 	return (
 		<div>
 			<Box sx={{ width: '95%', margin: 'auto', pt: '15px', mt: '15px' }}>
@@ -345,7 +336,7 @@ const Voucher = () => {
 								<div></div>
 								<Stack direction='row'>
 									<Tooltip title='Create Voucher'>
-										{userAdmin()?(
+										{userAdmin() ? (
 											<Button
 												className={classes.button}
 												size='small'
@@ -355,7 +346,7 @@ const Voucher = () => {
 											>
 												Create Voucher
 											</Button>
-										):(
+										) : (
 											<h1></h1>
 										)}
 									</Tooltip>
@@ -388,16 +379,11 @@ const Voucher = () => {
 											<TableCell align='left'>{statusV(voucher.voucherStatusId)}</TableCell>
 											<TableCell align='center'>
 												<ButtonGroup variant='text' aria-label='text button group'>
-													{isTrueSt(statusV(voucher.voucherStatusId))?(
-															<Button 
-															disabled
-															size='small'
-															variant='outline'
-															className={`${classes.button}`}															
-														>
-														<RedeemIcon style={{ visibility: 'hidden' }} />
+													{isTrueSt(statusV(voucher.voucherStatusId)) ? (
+														<Button disabled size='small' variant='outline' className={`${classes.button}`}>
+															<RedeemIcon style={{ visibility: 'hidden' }} />
 														</Button>
-													):(
+													) : (
 														<Button
 															size='small'
 															title='Redeem code'
@@ -410,28 +396,23 @@ const Voucher = () => {
 															<RedeemIcon></RedeemIcon>
 														</Button>
 													)}
-													{is1or2(voucher.voucherStatusId)?(
-													<Button
-														size='small'
-														title='Void vaucher'
-														className={`${classes.button}`}
-														variant='outline'
-														onClick={() => {
-															handleVoidVoucher(voucher);
-														}}
-													>
-														<SellIcon></SellIcon>
-													</Button>
-													):(
+													{is1or2(voucher.voucherStatusId) ? (
 														<Button
-														size='small'
-														disabled
-														className={`${classes.button}`}
-														variant='outline'														
-													>
-														<SellIcon style={{ visibility: 'hidden' }} />
-													</Button>
-													)}													
+															size='small'
+															title='Void vaucher'
+															className={`${classes.button}`}
+															variant='outline'
+															onClick={() => {
+																handleVoidVoucher(voucher);
+															}}
+														>
+															<SellIcon></SellIcon>
+														</Button>
+													) : (
+														<Button size='small' disabled className={`${classes.button}`} variant='outline'>
+															<SellIcon style={{ visibility: 'hidden' }} />
+														</Button>
+													)}
 												</ButtonGroup>
 											</TableCell>
 										</TableRow>
@@ -460,7 +441,6 @@ const Voucher = () => {
 				</ThemeProvider>
 			</Box>
 
-
 			<Dialog open={openCreateDialog} onClose={handleCreateDialogClose}>
 				<DialogTitle>Create Voucher</DialogTitle>
 				<DialogContent>
@@ -473,18 +453,16 @@ const Voucher = () => {
 								<MenuItem value='10'>10</MenuItem>
 								<MenuItem value='20'>20</MenuItem>
 								<MenuItem value='50'>50</MenuItem>
-                                <MenuItem value='100'>100</MenuItem>
-                                <MenuItem value='200'>200</MenuItem>
+								<MenuItem value='100'>100</MenuItem>
+								<MenuItem value='200'>200</MenuItem>
 							</Select>
 						</FormControl>
-                        <FormControl fullWidth margin='dense'>
+						<FormControl fullWidth margin='dense'>
 							<InputLabel>Currency</InputLabel>
 							<Select label='Currency' name='currency' defaultValue={'BAM'}>
 								{currencys.map(curr => (
 									<MenuItem value={curr.name}>{curr.name}</MenuItem>
-								)
-								)}
-
+								))}
 							</Select>
 						</FormControl>
 						<DialogActions>
@@ -498,7 +476,6 @@ const Voucher = () => {
 					</form>
 				</DialogContent>
 			</Dialog>
-
 
 			<Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleSnackbarClose}>
 				<Alert onClose={handleSnackbarClose} severity='success'>

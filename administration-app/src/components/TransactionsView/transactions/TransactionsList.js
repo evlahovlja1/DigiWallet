@@ -172,8 +172,9 @@ export const TransactionsList = (arg) => {
                 onClick={() => {
                   setMock(!mock);
                 }}
+                data-testid="transaction-mock-button"
               >
-                Transactions
+                Transactions list
               </Button>
             </Typography>
             <Box display={"flex"} justifyContent={"right"} marginRight={"2%"} marginTop={"1%"}>
@@ -188,7 +189,7 @@ export const TransactionsList = (arg) => {
             <Box sx={{ width: "95%", margin: "auto", pt: "15px" }}>
               <Paper sx={{ width: "100%", mb: 2, border: "none" }}>
                 <TableContainer>
-                  <Table>
+                  <Table data-testid="transaction-list-table">
                     <TransactionsListHeader
                       setGroupBy={setGroupBy}
                       groupBy={groupBy}

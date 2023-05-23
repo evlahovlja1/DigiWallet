@@ -47,6 +47,7 @@ function App() {
 		if (user.roles) {
 			var b = user.roles.filter(v => v === 'Admin')[0];
 			if (b === 'Admin') {
+				console.log("it's admin time")
 				return true;
 			}
 			return false;

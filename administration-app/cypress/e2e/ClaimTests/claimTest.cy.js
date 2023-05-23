@@ -34,6 +34,7 @@ describe('Testing claims', () => {
       cy.contains('Transactions').click();
       cy.contains('Claims').click();
       cy.get('table').find('tr').eq(7).find('td').eq(4).click(50,40);
+      cy.wait(1000);
       //cy.reload();
     })
     it('Open messages', () => {
@@ -58,6 +59,7 @@ describe('Testing claims', () => {
       cy.get('[type="text"]').type('Nova poruka');
       cy.contains('Send Message').click();
       cy.contains('Cancel').click();
+      cy.wait(1000);
     })
     it('Click to see unassigned claims', () => {
       cy.get('[type="text"]').type('abrulic1@etf.unsa.ba');
@@ -68,6 +70,7 @@ describe('Testing claims', () => {
       cy.contains('Transactions').click();
       cy.contains('Claims').click();
       cy.contains('Unassigned Claims').click();
+      cy.wait(1000);
     })
     it('Click to assigne claim', () => {
       cy.get('[type="text"]').type('abrulic1@etf.unsa.ba');

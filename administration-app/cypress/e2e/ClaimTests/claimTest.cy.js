@@ -4,7 +4,7 @@ describe('Testing claims', () => {
       cy.on('uncaught:exception', (err, runnable) => {
         return false;
       })
-      cy.visit('http://localhost:3000/login');
+      cy.visit('http://digipay.cc/login');
     })
       
     it('Checks if claim button exists', () => {
@@ -12,7 +12,7 @@ describe('Testing claims', () => {
       cy.get('[type="password"]').type('String1!');
       cy.get('.login-btn').click();
       cy.wait(3000);
-      //cy.reload();
+      cy.reload();
       cy.contains('Transactions').click();
       cy.contains('Claims').should('exist');
     })
@@ -21,7 +21,7 @@ describe('Testing claims', () => {
       cy.get('[type="password"]').type('String1!');
       cy.get('.login-btn').click();
       cy.wait(3000);
-      //cy.reload();
+      cy.reload();
       cy.contains('Transactions').click();
       cy.contains('Claims').click();
     })
@@ -30,10 +30,11 @@ describe('Testing claims', () => {
       cy.get('[type="password"]').type('String1!');
       cy.get('.login-btn').click();
       cy.wait(3000);
-      //cy.reload();
+      cy.reload();
       cy.contains('Transactions').click();
       cy.contains('Claims').click();
       cy.get('table').find('tr').eq(7).find('td').eq(4).click(50,40);
+      cy.wait(1000);
       //cy.reload();
     })
     it('Open messages', () => {
@@ -41,7 +42,7 @@ describe('Testing claims', () => {
       cy.get('[type="password"]').type('String1!');
       cy.get('.login-btn').click();
       cy.wait(3000);
-      //cy.reload();
+      cy.reload();
       cy.contains('Transactions').click();
       cy.contains('Claims').click();
       cy.get('table').find('tr').eq(7).find('td').eq(4).click();
@@ -51,32 +52,36 @@ describe('Testing claims', () => {
       cy.get('[type="password"]').type('String1!');
       cy.get('.login-btn').click();
       cy.wait(3000);
-      //cy.reload();
+      cy.reload();
       cy.contains('Transactions').click();
       cy.contains('Claims').click();
       cy.get('table').find('tr').eq(1).find('td').eq(4).click();
       cy.get('[type="text"]').type('Nova poruka');
       cy.contains('Send Message').click();
       cy.contains('Cancel').click();
+      cy.wait(1000);
     })
     it('Click to see unassigned claims', () => {
       cy.get('[type="text"]').type('abrulic1@etf.unsa.ba');
       cy.get('[type="password"]').type('String1!');
       cy.get('.login-btn').click();
       cy.wait(3000);
-      cy.contains('Transactions').click();
-      cy.contains('Claims').click();
-      cy.contains('Unassigned Claims').click();
-    })
-    /*it('Click to assigne claim', () => {
-      cy.get('[type="text"]').type('abrulic1@etf.unsa.ba');
-      cy.get('[type="password"]').type('String1!');
-      cy.get('.login-btn').click();
-      cy.wait(3000);
+      cy.reload();
       cy.contains('Transactions').click();
       cy.contains('Claims').click();
       cy.contains('Unassigned Claims').click();
       cy.wait(1000);
-      cy.get('table').find('tr').eq(2).find('td').eq(4).click();
-    })*/
+    })
+    it('Click to assigne claim', () => {
+      cy.get('[type="text"]').type('abrulic1@etf.unsa.ba');
+      cy.get('[type="password"]').type('String1!');
+      cy.get('.login-btn').click();
+      cy.wait(3000);
+      cy.reload();
+      cy.contains('Transactions').click();
+      cy.contains('Claims').click();
+      cy.contains('Unassigned Claims').click();
+      cy.wait(1000);
+      cy.get('table').eq(1).find('tr').eq(2).find('td').eq(4).click();
+    })
   });

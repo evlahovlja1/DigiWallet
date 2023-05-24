@@ -28,6 +28,7 @@ import EinoviceApprove from './components/Einovice/EinoviceRequiredData/Einovice
 
 import ElectronicInvoiceTemplate from './components/ElectronicInvoices/electronicInvoices';
 import InvoiceList from './components/UserEInvoicesList/InvoiceList';
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
 	const [token, setToken] = useState(null);
@@ -59,7 +60,12 @@ function App() {
 				<Router>
 					<NavBar token={token} isAdmin={isAdmin} setToken={setToken} />
 					<Routes>
-						<Route path='/' element={<h1 style={{ textAlign: 'center' }}>SI projekat</h1>} />
+						<Route 
+							path='/'
+							element={
+								<HomePage/>
+							}
+						/>
 						<Route
 							path='/transactions'
 							element={
